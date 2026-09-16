@@ -9,12 +9,17 @@
 - metrics / Prometheus endpoint
 - unit tests and sample EDI messages
 
-## Phase 2 - Real B2B transport
-- AS2 endpoint
+## Phase 2A - AS2 ingestion foundation (included)
+- AS2-style HTTP endpoint
+- configured trading-partner validation
+- Message-ID correlation and duplicate protection
+- X12 and EDIFACT media types
+
+## Phase 2B - Production AS2 protocol
 - S/MIME signing + encryption
 - MDN generation / correlation
-- trading-partner profiles and certificates
-- idempotency based on Message-ID/control number
+- trading-partner certificates
+- non-repudiation audit evidence
 
 ## Phase 3 - Transaction platform
 - Kafka-backed event flow

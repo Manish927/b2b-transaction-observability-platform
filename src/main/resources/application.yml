@@ -13,3 +13,14 @@ management:
 
 server:
   port: 8080
+
+b2b:
+  as2:
+    local-identifier: MANISH-B2B
+    partners:
+      partner-a:
+        as2-identifier: PARTNER-A
+        enabled: true
+      partner-b:
+        as2-identifier: PARTNER-B
+        enabled: true

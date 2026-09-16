@@ -23,6 +23,7 @@ This repository is designed to demonstrate those concepts incrementally.
 
 - Java 21 + Spring Boot
 - REST ingestion endpoint
+- AS2-style HTTP ingestion with partner validation and Message-ID idempotency
 - X12 vs EDIFACT auto-detection
 - basic X12 envelope parsing (`ISA`, `ST`)
 - basic EDIFACT envelope parsing (`UNB`, `UNH`)
@@ -102,6 +103,28 @@ curl http://localhost:8080/api/v1/transactions
 curl http://localhost:8080/api/v1/transactions/stats
 ```
 
+## Ingest through the AS2 channel
+
+The first AS2 milestone validates partner headers, correlates `Message-ID`, prevents
+duplicate processing, and forwards raw X12 or EDIFACT payloads into the existing
+transaction pipeline:
+
+```bash
+curl -X POST http://localhost:8080/api/v1/as2/messages \
+  -H 'Content-Type: application/EDI-X12' \
+  -H 'AS2-From: PARTNER-A' \
+  -H 'AS2-To: MANISH-B2B' \
+  -H 'Message-ID: <order-0001@partner-a>' \
+  --data-binary 'ISA*00*          *00*          *12*SENDER         *12*RECEIVER       *240101*1200*U*00401*000000905*0*P*>~ST*850*0001~'
+```
+
+Repeating the same partner, `Message-ID`, and payload returns the original transaction
+with `"duplicate": true`. Reusing that ID with different content returns HTTP `409`.
+
+This milestone is deliberately **AS2-style ingestion**, not yet a complete AS2 protocol
+implementation. S/MIME signatures, encryption, MIC calculation, certificates and MDNs
+remain Phase 2 work.
+
 ## Portfolio talking points
 
 This project provides concrete material to discuss:
@@ -122,4 +145,4 @@ This project provides concrete material to discuss:
 
 See [`docs/roadmap.md`](docs/roadmap.md).
 
-The next implementation milestone is **AS2 transport + trading-partner profiles + Message-ID/MDN correlation**.
+The next implementation milestone is **S/MIME security + certificates + Message-ID/MDN correlation**.
