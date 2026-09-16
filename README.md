@@ -1,6 +1,6 @@
 # B2B Transaction Observability Platform
 
-A GitHub portfolio project for learning and demonstrating **EDI transaction management, X12/EDIFACT processing, AS2 architecture, B2B integration, observability, reliability engineering, and AI-assisted operations**.
+A GitHub portfolio project for demonstrating **EDI transaction management, X12/EDIFACT processing, AS2 architecture, B2B integration, observability, reliability engineering, and AI-assisted operations**.
 
 The project deliberately starts as a small runnable Spring Boot service and evolves toward a production-style B2B transaction platform.
 
